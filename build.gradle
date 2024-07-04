@@ -35,6 +35,11 @@ dependencies {
     // JSON 라이브러리: JSON 데이터를 처리하기 위한 라이브러리
     implementation 'org.json:json:20230227'
 
+    // JPA 의존성 추가
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'javax.persistence:javax.persistence-api:2.2'
+
+    // MySQL
     implementation 'mysql:mysql-connector-java'
     // AWS S3
     implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE'
