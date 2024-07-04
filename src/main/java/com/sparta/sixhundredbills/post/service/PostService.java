@@ -17,10 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.server.ResponseStatusException;
 
 @Service
 @RequiredArgsConstructor
@@ -121,6 +119,9 @@ public class PostService {
      * @param id 게시물 ID
      * @return 찾은 게시물
      */
+
+    // + 단건 조회 역할
+
     public Post findPostById(Long id) {
         return postRepository.findById(id)
                 .orElseThrow(() -> new NotFoundPostException(ErrorEnum.NOT_POST));

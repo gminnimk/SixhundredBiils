@@ -3,6 +3,7 @@ package com.sparta.sixhundredbills.post.controller;
 import com.sparta.sixhundredbills.auth.security.UserDetailsImpl;
 import com.sparta.sixhundredbills.post.dto.PostRequestDto;
 import com.sparta.sixhundredbills.post.dto.PostResponseDto;
+import com.sparta.sixhundredbills.post.entity.Post;
 import com.sparta.sixhundredbills.post.service.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -41,6 +42,15 @@ public class PostController {
         int size = 5;
         Page<PostResponseDto> posts = postService.getPosts(page, size);
         return new ResponseEntity<>(posts, HttpStatus.OK);
+    }
+
+    // 게시물 단건 조회를 위한 어노테이션
+
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostResponseDto> getPost(@PathVariable Long postId) {
+        Post post = postService.findPostById(postId);
+        PostResponseDto response = new PostResponseDto(post);
+        return ResponseEntity.ok(response);
     }
 
     /**
