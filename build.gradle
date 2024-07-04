@@ -24,6 +24,9 @@ repositories {
 }
 
 dependencies {
+    // QueryDSL
+    implementation 'com.querydsl:querydsl-jpa:5.0.0'
+    annotationProcessor 'com.querydsl:querydsl-apt:5.0.0:jpa'
 
     // Spring Boot Starter Validation: 데이터 유효성 검사를 위한 라이브러리
     implementation 'org.springframework.boot:spring-boot-starter-validation'
@@ -31,8 +34,6 @@ dependencies {
 
     // JSON 라이브러리: JSON 데이터를 처리하기 위한 라이브러리
     implementation 'org.json:json:20230227'
-
-
 
     implementation 'mysql:mysql-connector-java'
     // AWS S3
@@ -60,7 +61,6 @@ dependencies {
     runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
     runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-
     // Spring Boot Test Starter
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -74,10 +74,22 @@ dependencies {
     testImplementation 'org.mockito:mockito-inline:4.11.0'
 }
 
-tasks.named('test') {
-    useJUnitPlatform()
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java', 'src/main/generated']
+        }
+    }
+}
+
+compileJava {
+    options.annotationProcessorGeneratedSourcesDirectory = file("src/main/generated")
 }
 
 test {
+    useJUnitPlatform()
+}
+
+tasks.named('test') {
     useJUnitPlatform()
 }
