@@ -40,6 +40,8 @@ public class Comment extends TimeStamp {
 
     private String showName;
     private String comment;
+    private Long commentId;
+    private int likeCount;
 
     /**
      * Comment 생성자
@@ -49,11 +51,13 @@ public class Comment extends TimeStamp {
      * @param comment 댓글 내용
      */
     @Builder
-    public Comment(Post post, User user, String showName, String comment) {
+    public Comment(Post post, User user, String showName, String comment, Long commentId, int likeCount) {
         this.post = post;
         this.user = user;
         this.showName = showName;
         this.comment = comment;
+        this.commentId = commentId;
+        this.likeCount = likeCount;
     }
 
     /**

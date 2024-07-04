@@ -7,6 +7,7 @@ import com.sparta.sixhundredbills.comment.dto.CommentRequestDto;
 import com.sparta.sixhundredbills.comment.dto.CommentResponseDto;
 import com.sparta.sixhundredbills.comment.entity.Comment;
 import com.sparta.sixhundredbills.comment.service.CommentService;
+import com.sparta.sixhundredbills.post.dto.PostResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,16 @@ public class CommentController {
         List<CommentResponseDto> response = commentService.getComments(postId, page - 1, size, sortBy);
         return ResponseEntity.ok(response);
     }
+
+
+    // 특정 댓글 & 좋아요 불러오기
+
+    @GetMapping("/{postId}/comments/{commentId}")
+    public ResponseEntity<CommentResponseDto> getComment(@PathVariable Long commentId) {
+        CommentResponseDto responseDto = commentService.findCommentByIdAndIncrementLikes(commentId);
+        return ResponseEntity.ok(responseDto);
+    }
+
 
     /**
      * 댓글 수정

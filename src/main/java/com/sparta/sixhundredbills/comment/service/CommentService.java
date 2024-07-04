@@ -12,6 +12,7 @@ import com.sparta.sixhundredbills.exception.ErrorEnum;
 import com.sparta.sixhundredbills.exception.NotFoundCommentException;
 import com.sparta.sixhundredbills.exception.NotFoundPostException;
 import com.sparta.sixhundredbills.exception.UnauthorizedException;
+import com.sparta.sixhundredbills.post.dto.PostResponseDto;
 import com.sparta.sixhundredbills.post.entity.Post;
 import com.sparta.sixhundredbills.post.service.PostService;
 import com.sparta.sixhundredbills.util.AnonymousNameGenerator;
@@ -101,6 +102,8 @@ public class CommentService {
         return responseDtoList;
     }
 
+
+
     /**
      * 댓글 수정
      * @param postId 게시물 ID
@@ -172,5 +175,20 @@ public class CommentService {
             deleteChildComments(childComment);
             commentRepository.delete(childComment);
         }
+    }
+
+
+
+
+
+
+    // 특정 게시물에 대한 특정 댓글만을 조회
+
+    public CommentResponseDto findCommentByIdAndIncrementLikes(Long commentId) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new NotFoundCommentException(ErrorEnum.NOT_COMMENT));
+
+        int likeCount = commentRepository.countLikesByCommentId(commentId);
+        return new CommentResponseDto(comment, likeCount);
     }
 }
