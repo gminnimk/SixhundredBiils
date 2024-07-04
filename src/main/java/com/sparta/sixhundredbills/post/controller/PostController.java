@@ -48,9 +48,8 @@ public class PostController {
 
     @GetMapping("/{postId}")
     public ResponseEntity<PostResponseDto> getPost(@PathVariable Long postId) {
-        Post post = postService.findPostById(postId);
-        PostResponseDto response = new PostResponseDto(post);
-        return ResponseEntity.ok(response);
+        PostResponseDto responseDto = postService.findPostByIdAndIncrementLikes(postId);
+        return ResponseEntity.ok(responseDto);
     }
 
     /**

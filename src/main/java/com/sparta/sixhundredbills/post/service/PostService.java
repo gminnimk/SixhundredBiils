@@ -64,11 +64,24 @@ public class PostService {
         return posts.map(PostResponseDto::new);
     }
 
+
+
+    // 단건 조회 & 게시물 좋아요 개수필드 나오게.
+    public PostResponseDto findPostByIdAndIncrementLikes(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new NotFoundPostException(ErrorEnum.NOT_POST));
+
+        int likeCount = postLikeRepository.countByPostId(postId);
+        return new PostResponseDto(post, likeCount);
+    }
+
+
     /**
      * 게시물 수정
-     * @param postId 수정할 게시물의 ID
+     *
+     * @param postId         수정할 게시물의 ID
      * @param postRequestDto 수정할 게시물의 정보
-     * @param user 게시물을 수정하려는 사용자
+     * @param user           게시물을 수정하려는 사용자
      * @return 수정된 게시물의 응답 데이터
      */
     public PostResponseDto updatePost(Long postId, PostRequestDto postRequestDto, User user) {

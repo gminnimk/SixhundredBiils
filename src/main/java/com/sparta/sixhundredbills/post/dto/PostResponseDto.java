@@ -10,6 +10,7 @@ import java.time.LocalDateTime;
 public class PostResponseDto {
     private Long id;
     private Long userId;
+    private int likeCount;
     private String showName;
     private String content;
     private String category;
@@ -17,9 +18,10 @@ public class PostResponseDto {
     private LocalDateTime updatedAt;
 
     @Builder
-    public PostResponseDto(Long id, Long userId, String showName, String content, String category, LocalDateTime createdAt, LocalDateTime updatedAt) {
+    public PostResponseDto(Long id, Long userId, int likeCount, String showName, String content, String category, LocalDateTime createdAt, LocalDateTime updatedAt) {
         this.id = id;
         this.userId = userId;
+        this.likeCount = likeCount;
         this.showName = showName;
         this.content = content;
         this.category = category;
@@ -34,6 +36,18 @@ public class PostResponseDto {
     public PostResponseDto(Post post) {
         this.id = post.getId();
         this.userId = post.getUser().getId();
+        this.likeCount = post.getLikeCount();
+        this.showName = post.getShowName();
+        this.content = post.getContent();
+        this.category = post.getCategory();
+        this.createdAt = post.getCreatedAt();
+        this.updatedAt = post.getModifiedAt();
+    }
+
+    public PostResponseDto(Post post, int likeCount) {
+        this.id = post.getId();
+        this.userId = post.getUser().getId();
+        this.likeCount = likeCount;
         this.showName = post.getShowName();
         this.content = post.getContent();
         this.category = post.getCategory();
