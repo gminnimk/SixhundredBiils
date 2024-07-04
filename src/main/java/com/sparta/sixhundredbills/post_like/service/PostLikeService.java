@@ -46,6 +46,9 @@ public class PostLikeService {
 
         postLikeRepository.save(newLike);
 
+        // 좋아요 추가 시 해당 게시물의 likeCount 증가
+        postLikeRepository.incrementLikeCount(postId);
+
         return PostLikeResponseDto.builder()
                 .message("성공적으로 좋아요를 등록했습니다")
                 .postId(postId)
@@ -63,6 +66,9 @@ public class PostLikeService {
                 .orElseThrow(() -> new CustomException(ErrorEnum.LIKE_NOT_FOUND));
 
         postLikeRepository.delete(postLike);
+
+        // 좋아요 취소 시 해당 게시물의 likeCount 감소
+        postLikeRepository.decrementLikeCount(postId);
 
         return PostLikeResponseDto.builder()
                 .message("성공적으로 좋아요를 취소했습니다")
